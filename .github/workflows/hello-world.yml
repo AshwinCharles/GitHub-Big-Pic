@@ -14,8 +14,8 @@ jobs:
 
     steps:
       -name: Check out repository code
-        uses: actions/checkout@v3
-       -run: echo "$(cat hello_world.txt)'
+       uses: actions/checkout@v3
+      -run: echo "$(cat hello_world.txt)'
        
     #steps: 
      # - name: Check out repository code
