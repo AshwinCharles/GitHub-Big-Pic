@@ -1,12 +1,9 @@
 name: build-test-deploy
-
 on: push
-
-jobs:
+jobs: 
   build:
     runs-on: ubuntu-latest
-
-    steps:
+    steps: 
       - name: checkout repo
         uses: actions/checkout@v4
       - name: use node.js
@@ -15,12 +12,11 @@ jobs:
           node-version: '20.x'
       - run: npm install
       - run: npm run build
-      
+
   test:
     needs: build
     runs-on: ubuntu-latest
-
-    steps:
+    steps: 
       - name: checkout repo
         uses: actions/checkout@v4
       - name: use node.js
@@ -28,49 +24,39 @@ jobs:
         with:
           node-version: '20.x'
       - run: npm install
-      - run: npm run test
-      
-    deploy:
-      needs: test
-      
+      - run: npm test
 
-      permissions:
-        contents: write
-        pages: write
-        id-token: write
+  deploy:
+    needs: test
+
+    permissions:
+      contents: write
+      pages: write     
+      id-token: write  
 
     environment:
       name: production
-      url: ${{ step.deployment.outputs.page_url }}
-
-      runs-on: ubuntu-latest    
-      
-      steps:
-        - name: checkout repo
-          uses: actions/checkout@v4
-          with:
-          token: ${{ secrets.GITHUB_TOEKN }}
-        - name: use node.js
-          uses: actions/setup-node@v4
-          with:
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: use node.js
+        uses: actions/setup-node@v4
+        with:
           node-version: '20.x'
-        - name: configure Github pages
-          use: actions/configure-pages@v4
-          with:
+      - name: configure github pages
+        uses: actions/configure-pages@v4
+        with:
           static_site_generator: next
-        - run: npm install
-        - run: npm run build
-        - name: upload artifacts
-          uses: actions/upload-pages-artifacts@v3
-          with:
-          path: ',/out'
-        - name: deploy
-          id: deployment
-          uses: actions/deply-pages@v4
-        
-         
-    
-    
-
-      
-      
+      - run: npm install
+      - run: npm run build    
+      - name: upload artifacts
+        uses: actions/upload-pages-artifact@v3
+        with: 
+          path: './out'
+      - name: deploy
