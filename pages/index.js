@@ -16,9 +16,9 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
 
-       <h1>Congratulations!</h1>
+       <h1>SAKI SAKI !</h1>
   <img src="https://octodex.github.com/images/NUX_Octodex.gif" alt="Description of GIF" />
-  <p>Congrats, you've successfully set up an automated workflow with GitHub Actions to deploy your Next.js application to GitHub Pages! 🥳</p>
+  <p>Well Done Saki on BOM Go-Live. Congratulations! 🥳</p>
 
       </main>
     </>
