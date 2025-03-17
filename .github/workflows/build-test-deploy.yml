@@ -27,20 +27,20 @@ jobs:
       - run: npm test
 
 deploy:
-  needs: test
+    needs: test
 
-  permissions:
+    permissions:
     contents: write
     pages: write
     id-token: write
 
-  environment:
-    name: production
-    url: ${{ steps.deplyment.outputs_page_url }}
+    environment:
+      name: production
+      url: ${{ steps.deplyment.outputs_page_url }}
 
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
     - name : checkout repo
       uses: actions/checkout@v4
       with:
